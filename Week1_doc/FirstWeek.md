@@ -75,7 +75,7 @@ System  ->>  System: Segment & Chunk Text
 
 System  ->>  System: Convert Text to Embeddings (Google Text-embedding-004)
 
-System  ->>  System: Update VectorDB (Store / Modify / Delete Embeddings)
+System  ->>  System: Update VectorDB 
 
 end
 
