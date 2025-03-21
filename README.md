@@ -1,4 +1,4 @@
-# SchoolChatbot
+# Vietnamese SchoolChatbot
 Chatbot feeded by school's information
 
 ## Usecase
