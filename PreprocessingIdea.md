@@ -3,29 +3,35 @@
 ## Document Preprocessing
 ```mermaid
 graph TD;
-A[Start: Upload Document] --> B{Detect File Type};
+  A[Start: Upload Document] --> B{Detect File Type};
 
-B -->|DOCX/DOC| C[Read file using python-docx];
-B -->|PDF| D[Read file using pdfplumber];
+  B -->|DOCX/DOC| C[Extract text using python-docx];
+  B -->|PDF| D[Extract text using pdfplumber];
 
-D --> E[Analyze Content Type];
-C --> E;
+  D --> E[Analyze Content Type];
+  C --> E;
 
-E -->|Text Found| F[Store Extracted Text];
-E -->|Table Detected| G{Is Table Recognizable as Text?};
-E -->|Image Found| H[Extract Images];
+  E -->|Text Detected| F{Detect corrupted text};
+  E -->|Table Detected| G{Is Table Recognizable as Text?};
+  E -->|Image Found| H{Contains Text or Objects?};
 
-G -->|Yes| I[Extract Table Directly];
-G -->|No| J[Convert Table to Image & Apply OCR];
+  F -->|No| F1[Extract Plain Text];
+  F -->|Yes| F2[image & ocr OR encoding technique];
+  F1 --> L;
+  F2 --> L;
 
-H --> K[Apply OCR on Images if Necessary];
+  H -->|Objects Detected| H1[Apply Object Detection];
+  H -->|Contains Text| H2[Apply OCR];
+  H1 --> L;
+  H2 --> L;
 
-I --> L[Organize the order];
-J --> L;
-K --> L;
-F --> L;
+  G -->|Yes| I[Extract Table as Text];
+  G -->|No| J[Convert Table to Image & Apply OCR];
 
-L --> M[Chunking Preprocessing];
+  I --> L[Organize Extracted Data];
+  J --> L;
+
+  L --> M[Chunking Preprocessing];
 
 ```
 
