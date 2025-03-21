@@ -1,6 +1,6 @@
 # Preprocessing
 
-
+## Document Preprocessing
 ```mermaid
 graph TD;
 A[Start: Upload Document] --> B{Detect File Type};
@@ -25,10 +25,11 @@ J --> L;
 K --> L;
 F --> L;
 
-L --> M[Smart chunking technique];
-M --> N[(Embedding, VectorDB)];
+L --> M[Chunking Preprocessing];
 
-```		
+```
+
+## Chunking Preprocessing
 ```mermaid
 graph TD;
 A(Start) --> C(Document Preprocessing);
