@@ -28,7 +28,7 @@ graph TD;
   G -->|Yes| I[Extract Table as Text];
   G -->|No| J[Convert Table to Image & Apply OCR];
 
-  I --> L[Organize Extracted Data];
+  I --> L[Organize Extracted Data - Metadata];
   J --> L;
 
   L --> M[Chunking Preprocessing];
