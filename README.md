@@ -19,6 +19,7 @@ Chatbot feeded by school's information
         -   Trả lời: FAQs, courses, syllabus, prerequisite, giáo viên, học phần, faculties, schedules, tuyển sinh, Student Services, hướng nghiệp khi **học viên** hỏi (Indentification) (UI + input data đa dạng)
         -   Trả các đường link truy cập TCU liên quan đến Users' req
         -   Gọi các API để vẽ biểu đồ, flowchart trực quan (visualisation tool) (UI)
+        -   Gợi ý câu hỏi dựa trên câu hỏi hiện tại
 -   **Requirement**:
     -   **Non-Functional Req**:
         -   Integrity: Độ nhất quán về thông tin cao, sai sót tối thiểu (chatbot: ảnh hưởng đến tư vấn sinh viên + quân đội) -> Cần test chatbot kĩ lưỡng + đầu vào thông tin chuẩn
