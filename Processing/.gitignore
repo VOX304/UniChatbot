@@ -1,0 +1,12 @@
+# Ignore virtual environments
+.venv/
+myvenv/
+__pycache__/
+.files
+
+# Ignore Chainlit & FAISS index directories
+.chainlit/
+.files/
+
+# Ignore sensitive files
+.env

@@ -1,0 +1,11 @@
+chainlit 
+langchain 
+langchain-google-genai 
+faiss-cpu 
+pyngrok 
+python-dotenv
+sentence-transformers
+langchain_community
+torch
+torchvision 
+torchaudio
