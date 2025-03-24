@@ -63,48 +63,40 @@ N --> O[End];
   
 # Text-type preprocessing
 ```mermaid
-
 graph TD;
 
-  
+  A[Start: Upload Document] --> B{Detect File Type?};
 
-A[Start: Upload Document] --> B{Detect File Type?};
+  B -->|DOCX/DOC| C[Extract Text using python-docx];
+  B -->|PDF| D[Extract Text using pdfplumber];
 
-  
+  C --> E[Apply Multiple Encoding Methods];
+  D --> E;
 
-B -->|DOCX/DOC| C[Extract Text using python-docx];
+  E --> E1{Check for Corrupted Text?};
 
-B -->|PDF| D[Extract Text using pdfplumber];
+  E1 -->|Minor Issues| E;
+  E1 -->|Not Corrupted| G[Extracted Text is Valid];
+  E1 -->|Still Corrupted| H1[Apply OCR Extraction];
 
-  
+  H1 --> H2["Extract Images with PyMuPDF"];
+  H2 --> F["Detect Text Areas with PaddleOCR"];
+  F --> G2["Recognize Text with VietOCR"];
+  G2 --> K[Combine & Organize Extracted Data];
 
-C --> E[Apply Multiple Encoding Methods];
+  G --> K;
 
-D --> E;
+  K --> M["Extract Metadata:  
+          - Document ID  
+          - File Name & Type  
+          - Page Numbers & Structure  
+          - Data_type: 'text'"];
 
-  
+  M --> N[Recursive Chunking];
 
-E --> E1{Check for Corrupted Text?};
-
-  
-
-E1 -->|Minor Issues| E;
-
-E1 -->|Not Corrupted| G[Extracted Text is Valid];
-
-E1 -->|Still Corrupted| H1[Apply OCR Extraction];
-
-  
-
-H1 --> K;
-
-G --> K[Combine & Organize Extracted Data];
-
-  
-
-K --> L[Finish: Processed Text Ready];
-
+  N --> O[Store Chunks & Metadata in VectorDB];
 ```
+  
 
   
 # Image-type preprocessing
