@@ -30,6 +30,15 @@
 
 ![A diagram illustrating the differences between selected types of chunking in natural language processing](https://bitpeak.com/wp-content/uploads/2024/04/Chunking-methodv5.png)
 
+# Những góp ý sau bài thuyết trình 
+1. Lưu ý việc tạo các testcase, các kịch bản để vừa kiểm tra tiến độ, vừa kiểm tra hiệu năng của Chatbot
+2. Về vấn đề Chunking, cần xem xét việc chia tài liệu để đảm bảo tính toạn vẹn của nghĩa trong câu 
+3. Ưu tiên vào Tiền xử lý dữ liệu txt hơn là table và image
+4. Cần tìm cách để kiểm tra Doc-prep và chunking (file log) -> BM25 + 
+5. Làm Query, Retrieve -enrichment để đảm bảo truy vấn của người dùng (paraphase)
+6. Tìm hiểu các công cụ tương tự Khoj
+7. Citation - trích dẫn sai
+   
 # Thuyết trình tổng kết 4 tuần:
 
 https://app.slidespeak.co/presentation/cm923w7nb000c2io68cchj78p/share
