@@ -1,40 +1,70 @@
+# 🧠 Vietnamese SchoolChatbot
 
-# Vietnamese SchoolChatbot
+> **Rasa RAG-powered Chatbot giúp sinh viên, giảng viên, cán bộ truy vấn thông tin nhà trường một cách thông minh, nhanh chóng, chính xác**
 
-Chatbot feeded by school's information
+---
 
-## Problems:
--   **Requirement**:
-    -   **Non-Functional Req**:
-        -   Integrity: Độ nhất quán về thông tin cao, sai sót tối thiểu (chatbot: ảnh hưởng đến tư vấn sinh viên + quân đội) -> Cần test chatbot kĩ lưỡng + đầu vào thông tin chuẩn
-        -   Response time: nhanh (ít nhất chatbot đưa ra các dòng đầu tiên trong câu trả lời trong vòng <3s) -> retrieve augmented + stream answer
-        -   Smart: Có thể đáp ứng tuyển sinh, thông tin nhà trường, lịch học, tư vấn ngành học, thông tin GV, lịch học, làm các tác vụ văn thư, ...
-        -   Maintainability: dễ duy trì, đáp ứng phần cứng hệ thống (chưa có thông tin)
-        -   Security: (chưa có thông tin) :((
-    -   **Functional Req**:
-        -   Preprocessing: (Doc_info retrieving, Chunking, VectorDB)
-            -   Preprocesing các dạng tài liệu khác nhau từ structured: .json, .markdown, .xml, .csv đến unstructured: .doc, .docx, .pdf, ...
-            -   Preprocessing các dạng format đầu vào: image, table, txt
-            -   Chunking: trích xuất được data đầy đủ và có format nhất -> về dạng markdown + semantics + hiararchy
-            -   VectorDB đáp ứng được CRUD
-        -   Processing: (VectorDB, WebSearch, Ranker, LLM)
+## 📘 Mô tả bài toán
 
+Trong các trường đại học, việc tra cứu thông tin như chương trình học, lịch thi, biểu mẫu hành chính, thông tin tuyển sinh,... thường gây khó khăn cho cả **sinh viên** và **cán bộ, giảng viên** do:
 
--   **Use Cases**:
-    -   _**Đã Xong**_: Trả lời câu hỏi và trích đoạn được câu hỏi từ tài liệu nào.
-    -   _**Chắc chắn sẽ làm**_:
-        -   Chatbot tích hợp vào website. (UI)
-        -   History: Thread with multiple Gemini & multiple requests (xây dựng sau, cùng với web). (UI)
-        -   CRUD được VectorDB: Cho các trường hợp cần thay đổi thông tin từ các tài liệu học. (preprocessing)
-        -   Gợi ý các câu hỏi dựa trên các câu hỏi hiện tại (UI)
-        -   Chunking method: Recursive(hierarchical) + Semantics
-    -   _**Đang đắn đo**_:
-        -   Chatbot có thể tự tra mạng để trả lời các truy vấn(!?)
-        -   Trích file ảnh
-        -   Trả lời: FAQs, courses, syllabus, prerequisite, giáo viên, học phần, faculties, schedules, tuyển sinh, Student Services, hướng nghiệp khi **học viên** hỏi (Indentification) (UI + input data đa dạng)
-        -   Trả các đường link truy cập TCU liên quan đến Users' req
-        -   Gọi các API để vẽ biểu đồ, flowchart trực quan (visualisation tool) (UI)
-        -   Gợi ý câu hỏi dựa trên câu hỏi hiện tại
+- Cấu trúc website không trực quan
+- Dữ liệu phân tán, thiếu liên kết
+- Không phải ai cũng biết rõ nơi tra cứu đúng
+- Văn bản mới, quy trình mới thường không cập nhật kịp đến người dùng
+
+**Giải pháp đề xuất**: xây dựng một chatbot AI sử dụng mô hình Retrieval-Augmented Generation (RAG) kết hợp với Rasa để:
+
+- Tự động trả lời thông minh bằng ngôn ngữ tự nhiên
+- Truy xuất đúng thông tin gốc từ tài liệu của trường
+- Cập nhật nhanh các quy trình, biểu mẫu, văn bản
+- Không bị giới hạn bởi hiểu biết về cấu trúc trang web hay kỹ năng tìm kiếm
+
+---
+
+## ❓ Vấn đề & Yêu cầu
+
+### 🔧 Non-Functional Requirements:
+- **Độ chính xác cao**: Đảm bảo thông tin nhất quán, tối thiểu sai sót  
+  → Cần kiểm thử kỹ & chuẩn hóa thông tin đầu vào
+- **Tốc độ phản hồi nhanh**: <3s có phản hồi đầu tiên  
+  → RAG + streaming output
+- **Thông minh**: Trả lời linh hoạt các câu hỏi về tuyển sinh, lịch học, ngành học, giảng viên, dịch vụ sinh viên,...
+- **Dễ duy trì**: Thiết kế dễ cập nhật, tương thích hệ thống hiện tại
+- **Bảo mật**: Chưa xác định rõ – cần thiết kế bổ sung sau
+
+### ✅ Functional Requirements:
+
+#### 📄 Preprocessing
+- Xử lý nhiều định dạng:
+  - Structured: `.json`, `.csv`, `.xml`, `.md`
+  - Unstructured: `.docx`, `.pdf`, `.txt`, ảnh (OCR)
+- Trích xuất & chuyển đổi nội dung thành markdown có cấu trúc
+- Chunking theo hierarchy + semantics
+- VectorDB hỗ trợ CRUD (update khi thay đổi tài liệu)
+
+#### ⚙️ Processing
+- VectorDB: FAISS hoặc Chroma
+- Re-Ranker: PhoRanker (cross-encoder)
+- LLM: Gemini 2.0 Flash Lite (Google Generative AI)
+- Tích hợp Rasa Pro:
+  - Command Generator
+  - FlowPolicy, IntentlessPolicy
+  - Flow & Pattern YAML
+
+---
+
+## 📌 Use Cases
+
+| Trạng thái       | Tính năng                                                                 |
+|------------------|---------------------------------------------------------------------------|
+| ✅ Đã hoàn thành | Trả lời câu hỏi + truy nguồn tài liệu                                     |
+| 🔜 Sẽ làm        | Giao diện website, lịch sử hội thoại, CRUD VectorDB, gợi ý câu hỏi        |
+| 🤔 Đắn đo        | Web search, trích ảnh, trả lời chuyên sâu, vẽ biểu đồ, trả link TCU,...   |
+
+---
+
+## 🔁 Quy trình xử lý chính
 
 ```mermaid
 sequenceDiagram
@@ -66,5 +96,3 @@ loop when query appear:
   LLM -->> Sys: Return Generated Response
   Sys ->> User: Display Response
 end
-
-```
