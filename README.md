@@ -44,9 +44,10 @@ Trong các trường đại học, việc tra cứu thông tin như chương tr�
 - VectorDB hỗ trợ CRUD (update khi thay đổi tài liệu)
 
 #### ⚙️ Processing
-- VectorDB: FAISS hoặc Chroma
+- VectorDB: FAISS (local save)
 - Re-Ranker: PhoRanker (cross-encoder)
 - LLM: Gemini 2.0 Flash Lite (Google Generative AI)
+- Embedding: dangvantuan/vietnamese-document-embedding
 - Tích hợp Rasa Pro:
   - Command Generator
   - FlowPolicy, IntentlessPolicy
