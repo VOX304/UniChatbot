@@ -1,0 +1,111 @@
+version: '3.1'
+
+intents:
+- Ask_syllabus
+- admission_requirements
+- admission_with_rank_in_particular_program
+- college_detail
+- college_facilities
+- college_timing
+- goodbye
+- greet
+- program_info
+- program_name
+- scholarship_schemes
+- start_rag
+- user_commends
+entities:
+- program
+- rank
+actions:
+- action_set_rag_active
+- utter_RAG_hello
+- action_rag_trigger
+- action_which_program
+- action_explain_program
+- action_query_database
+- action_admission_confidence
+- action_ask_syllabus
+- action_default_fallback
+responses:
+  utter_greet:
+  - text: Hey! I am College Chatbot. How may I help you?
+  - text: Hi! I am College Chatbot. How may I help you?
+  - text: Hello! I am College Chatbot. How may I help you?
+  - text: College Chatbot here! How may I help you?
+  utter_default:
+  - text: Sorry, I didn't get that. Can you please rephrase?
+  utter_goodbye:
+  - text: Bye
+  - text: See you again
+  - text: Have a nice day
+  utter_say_collegeDetail:
+  - text: Kathmandu Engineering College, established in 1998 AD, is a premier private institution affiliated with IOE, TU. Renowned for quality education, it offers a range of engineering programs. With top-notch facilities and expert faculty, it nurtures innovative thinkers and prepares students for success in the dynamic field of engineering.
+  utter_scholarship_detail:
+  - text: Scholarship is awarded to top 5% of the students at each semester exam, besides the one already granted via IOE ranks, reserved quota and so on.
+  - text: Scholarship is awarded to top 4 students at each semester exam. They are awarded with the total fee for that semester.
+  - text: The scholarship is granted to the highest-ranking four students following each semester examination, covering the entire tuition fees for that specific semester.
+  - text: At the conclusion of each semester exam, the scholarship is bestowed upon the top four students, covering the total expenses for that particular semester.
+  - text: The scholarship is allocated to the four highest-performing students after every semester assessment, providing full coverage of the respective semester's fees.
+  - text: Top four students from each semester exam are presented with the scholarship, which covers the complete fees for that particular semester.
+  - text: Following the conclusion of every semester examination, the scholarship is conferred upon the four most outstanding students, encompassing the total fees for that semester.
+  utter_say_collegeFacility:
+  - text: Facilities of Lab, canteen and even hostel for students outsude valley are available.
+  - text: Amenities encompassing laboratories, libraries, cafeterias, and separate accommodations for male and female students.
+  - text: Resources provided include labs, libraries, dining areas, and housing for both genders.
+  - text: Facilities consist of labs, libraries, eateries, and hostel arrangements for boys and girls.
+  - text: The offerings entail labs, libraries, food services, and residences for male and female students.
+  - text: Available provisions encompass labs, libraries, dining facilities, and separate housing for boys and girls.
+  - text: Services include labs, libraries, canteens, and accommodations for both male and female residents.
+  - text: The amenities provided encompass labs, libraries, dining options, and segregated housing for students.
+  - text: Provided resources encompass laboratories, library facilities, dining areas, and gender-segregated hostels.
+  - text: Offerings include labs, libraries, food amenities, and separate housing arrangements for male and female students.
+  - text: Available facilities consist of labs, libraries, canteens, and hostel accommodations for both genders.
+  - text: Services provided encompass labs, libraries, dining facilities, and housing options for boys and girls.
+  utter_say_admission_requirements:
+  - text: Meeting the requirements for admission involves students successfully completing the IOE examination and having received instruction in high school-level mathematics. Nonetheless, it is important to act swiftly as the admission process is currently underway.
+  - text: It is imperative that students fulfill the necessary criteria, which involves passing the IOE examination and having undergone instruction in mathematics at the high school level. Despite this, there is an urgency to apply promptly as admissions are currently being processed.
+  - text: To gain admission, students must meet specific prerequisites, including passing the IOE examination and having received high school-level instruction in mathematics. Nevertheless, it is crucial to note that the admission process is ongoing and requires immediate attention.
+  - text: Admission eligibility entails passing the IOE examination and completing high school-level mathematics instruction. However, it is essential to act promptly due to the ongoing admission procedure.
+  - text: Students aiming for admission must fulfill certain requirements such as passing the IOE examination and completing high school-level mathematics instruction. Yet, it is crucial to be aware of the ongoing admissions process and to act swiftly.
+  - text: Achieving admission requires students to pass the IOE examination and have undergone high school-level mathematics instruction. However, it is important to note the urgency of the ongoing admission process.
+  - text: Meeting admission prerequisites involves passing the IOE examination and having completed high school-level mathematics instruction. Despite this, it is critical to apply promptly as admissions are currently open.
+  - text: In order to qualify for admission, students must pass the IOE examination and have received high school-level instruction in mathematics. It is imperative to act swiftly due to the ongoing admission process.
+  - text: Fulfilling the admission prerequisites includes passing the IOE examination and having undergone instruction in high school-level mathematics. Nevertheless, there is a pressing need to apply promptly as admissions are currently underway.
+  - text: Admission eligibility necessitates students to pass the IOE examination and have completed high school-level mathematics instruction. However, it is crucial to act quickly as the admission process is currently active.
+  utter_college_timing:
+  - text: College timing is from 9 A.M to 5 P.M. And  days a week, from monday to friday.
+  - text: The operational hours of the college commence at 9 o'clock in the morning and conclude at 5 o'clock in the evening.
+  - text: The college functions between the hours of 9 A.M. and 5 P.M.
+  - text: College activities begin at 9 in the morning and conclude at 5 in the evening.
+  - text: The timing of the college extends from 9 A.M. through 5 P.M.
+  - text: The college is open for business from 9 A.M. until 5 P.M. on weekdays.
+  - text: The operational hours for the college span from 9 A.M. to 5 P.M.
+  - text: The schedule at the college runs from 9 in the morning to 5 in the evening.
+  - text: The college operates from 9 A.M. to 5 P.M. on weekdays.
+  - text: The working hours of the college are from 9 A.M. until 5 P.M.
+  - text: The college is accessible from 9 in the morning until 5 in the evening on weekdays.
+  utter_loved_to_help:
+  - text: Its my keen duty to serve you. Mind remembering me in near future. You can View college brochure via this link->  https://rb.gy/x427u6
+  - text: It's my sincere obligation to assist you. Please do consider recalling me sometime soon. You can View college brochure via this link->  https://rb.gy/x427u6
+  - text: I am committed to serving you diligently. Please keep me in mind in the foreseeable future. You can View college brochure via this link->  https://rb.gy/x427u6
+  - text: I take it upon myself to support you earnestly. Kindly remember me in the times ahead. You can View college brochure via this link->  https://rb.gy/x427u6
+  - text: I consider it my earnest responsibility to be of service to you. Please keep me in mind in the near future. You can View college brochure via this link->  https://rb.gy/x427u6
+  - text: It's my genuine duty to be at your service. I hope you'll remember me in the upcoming time. You can View college brochure via this link->  https://rb.gy/x427u6
+  - text: I'm dedicated to serving you attentively. Please do keep me in your thoughts in the coming future. You can View college brochure via this link->  https://rb.gy/x427u6
+  - text: I'm committed to serving you diligently. Please don't hesitate to remember me in the near future. You can View college brochure via this link->  https://rb.gy/x427u6
+  - text: I feel it's my sincere obligation to help you. I hope you'll consider me in the near future. You can View college brochure via this link->  https://rb.gy/x427u6
+  - text: I consider it my solemn duty to assist you. Please do keep me in mind in the foreseeable future. You can View college brochure via this link->  https://rb.gy/x427u6
+  - text: It's my genuine commitment to support you. I kindly request you to remember me in the upcoming times. You can View college brochure via this link->  https://rb.gy/x427u6
+  utter_want_syllabus_details:
+  - text: Do you want to know about syllabus?
+  - text: Would you like to know about particular program's syllabus?
+  - text: Would you mind if I provide you with syllabus details?
+  - text: Can I share core syllabus details?
+  - text: Can I provide you with syllabus details?
+  utter_RAG_hello:
+  - text: Mô hình đã được mở, bạn vui lòng chuyển Tab để sử dụng.
+  - text: RAG đã được mở, bạn vui lòng chuyển Tab để sử dụng.
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
