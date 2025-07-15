@@ -8,10 +8,12 @@ from langchain.schema import HumanMessage
 from langchain.embeddings import HuggingFaceEmbeddings
 from sentence_transformers import CrossEncoder  # ✅ NEW
 import torch
+from typing import List, Dict
 import numpy as np
+from IntentClassifer_QueryParaphrasing import generate_paraphrases
 
 
-#device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 #print(f"Using device: {device}")
 
 
@@ -32,7 +34,8 @@ vector_db = FAISS.load_local(faiss_db_path, embeddings=embedding_model, allow_da
 cross_encoder = CrossEncoder("itdainb/PhoRanker")
 tokenizer = AutoTokenizer.from_pretrained("itdainb/PhoRanker")
 
-device = torch.device("cpu")  # Force CPU usage
+#device = torch.device("gpu")  # Force CPU usage
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = AutoModelForSequenceClassification.from_pretrained("itdainb/PhoRanker").to(device)
 
 
@@ -109,7 +112,68 @@ def answer_query(query, user_history):
     return {"response": response_text, "sources": source_map}
 
 
+### ADD-ON FUNCTION: handle_information_retrieval
+
+async def handle_information_retrieval(query: str) -> str:
+    """
+    Handle information retrieval and response generation using only the query parameter.
+
+    Args:
+        query (str): The user query in Vietnamese.
+
+    Returns:
+        str: The generated response from the LLM.
+    """
+    # Access the global instances of llm, vector_db, and rerank_fn
+    llm = chat_model
+    vector_db_instance = vector_db
+    rerank_fn = rerank_documents
+
+    # 1. Generate paraphrases
+    variants = [query] + generate_paraphrases(query, llm, num_variants=3)
+
+    # 2. Multi-query FAISS retrieval
+    all_docs = []
+    for q in variants:
+        all_docs.extend(vector_db_instance.similarity_search(q, k=5))
+
+    # 3. Deduplicate documents by content
+    seen = set()
+    unique_docs = []
+    for doc in all_docs:
+        key = doc.page_content.strip()[:200]
+        if key not in seen:
+            seen.add(key)
+            unique_docs.append(doc)
+
+    # 4. Rerank with PhoRanker
+    top_docs = rerank_fn(query, unique_docs)
+
+    # 5. Construct document content
+    source_knowledge = "\n\n".join(
+        f"({i+1}) {doc.page_content}"
+        for i, doc in enumerate(top_docs)
+    )
+
+    # 6. Construct prompt
+    prompt = f"""Bạn là tư vấn viên của trường Sĩ Quan Thông Tin.
+Hãy trả lời câu hỏi một cách chính xác và không thêm nội dung ngoài tài liệu.
+
+📌 **Nội dung tài liệu**:
+{source_knowledge}
+
+❓ **Câu hỏi hiện tại**:
+{query}
+"""
+
+    # 7. Generate response using Gemini
+    res = await llm.ainvoke([HumanMessage(content=prompt)])
+    return res.content.strip()
+
+
+#-------------------------------------------------------------------------------------------------------------------------
+
 if __name__ == "__main__":
-    user_query = "Các trang web của trường"
-    result = answer_query(user_query, [])
-    print(f"\nResponse:\n{result['response']}\n\nSources:\n{result['sources']}")
+    # Example query
+    response = handle_information_retrieval("Thông tin tuyển sinh của trường là gì?")
+    print(f"\nResponse:\n{response}")
